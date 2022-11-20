@@ -8,11 +8,11 @@ MYORG=Acme			#0.organizationName
 MYOU=IT				#organizationalUnitName
 ROOTCN="Acme Root CA"		#Root CA CommonName
 SRVCN="test.lab.home"		#Server CommonName
-WORKDIR=$(pwd)/certs
+WORKDIR=$(pwd)/certs		#Working directory where everything gets created
 #
 #
 
-# Creates the working directory if it doesn't exists, default is present worjing directory.
+# Creates the working directory if it doesn't exist.
 if [ ! -d $WORKDIR ]; then
   mkdir -p $WORKDIR
 fi
