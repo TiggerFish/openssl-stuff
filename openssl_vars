@@ -1,0 +1,8 @@
+CCODE=GB                        #countryName
+MYST=England                    #stateOrProvinceName
+MYLOC=London                    #localityName
+MYORG=Acme                      #0.organizationName
+MYOU=IT                         #organizationalUnitName
+ROOTCN="Acme Root CA"           #Root CA CommonName
+SRVCN="nodea.lab.work"          #Server CommonName
+WORKDIR=/data/ca                #Working directory where everything gets created
