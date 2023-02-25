@@ -1,4 +1,4 @@
-CODE=GB                        #countryName
+CCODE=GB                        #countryName
 MYST=England                    #stateOrProvinceName
 MYLOC=London                    #localityName
 MYORG=Acme                      #0.organizationName
