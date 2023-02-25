@@ -22,6 +22,7 @@ new_certs_dir     = $WORKDIR/newcerts
 database          = $WORKDIR/index.txt
 serial            = $WORKDIR/serial
 RANDFILE          = $WORKDIR/.rand
+copy_extensions   = copy
 
 # The root key and root certificate.
 private_key       = $WORKDIR/$(echo "$MYORG" | tr '[:upper:]' '[:lower:]').ca.key
@@ -82,12 +83,9 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer:always
 keyUsage = critical, digitalSignature, nonRepudiation, keyEncipherment
 extendedKeyUsage = serverAuth,clientAuth
-subjectAltName = @alt_names
-
-[ alt_names ]
-DNS.1 = $SRVCN
 
 EOF
+
 #Creates database file
 touch $WORKDIR/index.txt
 #Creates newcerts dir
@@ -104,20 +102,3 @@ chmod 444 $WORKDIR/$(echo "$MYORG" | tr '[:upper:]' '[:lower:]').ca.crt
 
 # Check CA cert
 #openssl x509 -noout -text -in $WORKDIR/$(echo "$MYORG" | tr '[:upper:]' '[:lower:]').ca.crt
-
-# Create Server key
-openssl genrsa -out $WORKDIR/$SRVCN.key 2048
-
-# Create Server CSR
-openssl req -config $WORKDIR/openssl.cnf -key $WORKDIR/$SRVCN.key -new -sha256 -out $WORKDIR/$SRVCN.csr
-
-# Sign Server CSR
-openssl ca -batch -create_serial -config $WORKDIR/openssl.cnf -extensions server_cert -days 375 -notext -md sha256 -in $WORKDIR/$SRVCN.csr -out $WORKDIR/$SRVCN.crt
-chmod 444 $WORKDIR/$SRVCN.crt
-
-# Check Server Cert
-openssl x509 -noout -text -in $WORKDIR/$SRVCN.crt
-
-# Check trust in full chain
-openssl verify -CAfile $WORKDIR/$(echo "$MYORG" | tr '[:upper:]' '[:lower:]').ca.crt $WORKDIR/$SRVCN.crt
-
